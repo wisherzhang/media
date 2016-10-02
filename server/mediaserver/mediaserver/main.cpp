@@ -101,14 +101,14 @@ int main(int argc, char* argv[])
 	char revData[255]; 
 	while (true)
 	{
-		printf("等待连接...\n");
+		//printf("等待连接...\n");
 		sClient = accept(slisten, (SOCKADDR *)&remoteAddr, &nAddrlen);
 		if(sClient == INVALID_SOCKET)
 		{
 			printf("accept error !");
 			continue;
 		}
-		printf("接受到一个连接：%s \r\n", inet_ntoa(remoteAddr.sin_addr));
+		//printf("接受到一个连接：%s \r\n", inet_ntoa(remoteAddr.sin_addr));
 
 		//接收数据
 		int ret = recv(sClient, revData, 255, 0);		
@@ -119,8 +119,8 @@ int main(int argc, char* argv[])
 		}
 
 		//发送数据
-		char * sendData = "你好，TCP客户端！\n";
-		send(sClient, sendData, strlen(sendData), 0);
+		//char * sendData = "你好，TCP客户端！\n";
+		send(sClient, revData, strlen(revData), 0);
 		closesocket(sClient);
 	}
 
