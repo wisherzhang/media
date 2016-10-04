@@ -61,13 +61,13 @@ int udp_server(int argc, char* argv[])
 //udp
 int main(int argc, char* argv[])
 {
-	//初始化WSA
-	WORD sockVersion = MAKEWORD(2,2);
-	WSADATA wsaData;
-	if(WSAStartup(sockVersion, &wsaData)!=0)
-	{
-		return 0;
-	}
+	////初始化WSA
+	//WORD sockVersion = MAKEWORD(2,2);
+	//WSADATA wsaData;
+	//if(WSAStartup(sockVersion, &wsaData)!=0)
+	//{
+	//	return 0;
+	//}
 
 	//创建套接字
 	SOCKET slisten = socket(AF_INET, SOCK_STREAM, 0);
@@ -125,6 +125,6 @@ int main(int argc, char* argv[])
 	}
 
 	closesocket(slisten);
-	WSACleanup();
+	//WSACleanup();
 	return 0;
 }
