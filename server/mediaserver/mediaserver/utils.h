@@ -22,4 +22,29 @@
 std::string int2str(int i);
 std::string size_t2str(size_t i);
 
+std::string UrlDecodeString(const std::string & encoded);
+
+
+template<class CTYPE>
+size_t vsprintfn(CTYPE* buffer, size_t buflen, const CTYPE* format,
+	va_list args) {
+		int len = vsnprintf(buffer, buflen, format, args);
+		if ((len < 0) || (static_cast<size_t>(len) >= buflen)) {
+			len = static_cast<int>(buflen - 1);
+			buffer[len] = 0;
+		}
+		return len;
+}
+
+template<class CTYPE>
+size_t sprintfn(CTYPE* buffer, size_t buflen, const CTYPE* format, ...);
+template<class CTYPE>
+size_t sprintfn(CTYPE* buffer, size_t buflen, const CTYPE* format, ...) {
+	va_list args;
+	va_start(args, format);
+	size_t len = vsprintfn(buffer, buflen, format, args);
+	va_end(args);
+	return len;
+}
+
 #endif  // WEBRTC_EXAMPLES_PEERCONNECTION_SERVER_UTILS_H_

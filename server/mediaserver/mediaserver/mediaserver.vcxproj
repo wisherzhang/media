@@ -76,10 +76,12 @@
   <ItemGroup>
     <ClCompile Include="data_socket.cc" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="peer_channel.cc" />
     <ClCompile Include="utils.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="data_socket.h" />
+    <ClInclude Include="peer_channel.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
