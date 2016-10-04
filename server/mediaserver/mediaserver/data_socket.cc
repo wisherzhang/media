@@ -18,6 +18,7 @@
 #include <unistd.h>
 #endif
 #include <assert.h>
+#include "utils.h"
 
 static const char kHeaderTerminator[] = "\r\n\r\n";
 static const int kHeaderTerminatorLength = sizeof(kHeaderTerminator) - 1;
