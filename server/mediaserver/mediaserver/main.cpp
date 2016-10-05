@@ -3,11 +3,13 @@ created in 2016.09.29
 ******************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #include <vector>
 #include "data_socket.h"
 #include "peer_channel.h"
+#include "config.h"
+using namespace std;
 #ifdef WIN32
 #pragma comment(lib,"ws2_32.lib")
 #endif
@@ -92,7 +94,13 @@ int main(int argc, char* argv[])
 {
 	// Abort if the user specifies a port that is outside the allowed
 	// range [1, 65535].
-	short FLAG_port = 8888;
+	Config *config = new Config("config.ini");
+	string server_port;
+	string port_key = "port";
+
+	config->ReadConfig(port_key,server_port);
+	short FLAG_port = atoi(server_port.c_str());
+	//short FLAG_port = 8888;
 	if ((FLAG_port < 1) || (FLAG_port > 65535)) {
 		printf("Error: %i is not a valid port.\n", FLAG_port);
 		return -1;

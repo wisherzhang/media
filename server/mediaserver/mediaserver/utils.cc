@@ -11,7 +11,7 @@
 #include "utils.h"
 
 #include <stdio.h>
-#include<sstream>
+#include <sstream>
 
 #define STACK_ARRAY(TYPE, LEN) static_cast<TYPE*>(::alloca((LEN)*sizeof(TYPE)))
 

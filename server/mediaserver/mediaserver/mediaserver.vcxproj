@@ -74,12 +74,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="config.cpp" />
     <ClCompile Include="data_socket.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="peer_channel.cc" />
     <ClCompile Include="utils.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="config.h" />
     <ClInclude Include="data_socket.h" />
     <ClInclude Include="peer_channel.h" />
     <ClInclude Include="utils.h" />
