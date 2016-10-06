@@ -97,6 +97,8 @@ int main(int argc, char* argv[])
 	Config *config = new Config("config.ini");
 	string server_port;
 	string port_key = "port";
+	string ip;
+	config->ReadConfig("ip",ip);
 
 	config->ReadConfig(port_key,server_port);
 	short FLAG_port = atoi(server_port.c_str());
