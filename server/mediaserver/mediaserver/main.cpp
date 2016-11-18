@@ -4,7 +4,7 @@ created in 2016.09.29
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-
+#include <cstring>
 #include <vector>
 #include "data_socket.h"
 #include "peer_channel.h"
@@ -43,14 +43,16 @@ void HandleBrowserRequest(DataSocket* ds, bool* quit) {
 //udp
 int udp_server(int argc, char* argv[])
 {
+#ifdef WIN32
 	WSADATA wsaData;
 	WORD sockVersion = MAKEWORD(2,2);
 	if(WSAStartup(sockVersion, &wsaData) != 0)
 	{
 		return 0;
 	}
+#endif
 
-	SOCKET serSocket = socket(AF_INET, SOCK_DGRAM, 0); 
+	NativeSocket serSocket = socket(AF_INET, SOCK_DGRAM, 0); 
 	if(serSocket == INVALID_SOCKET)
 	{
 		printf("socket error !");
@@ -60,7 +62,7 @@ int udp_server(int argc, char* argv[])
 	sockaddr_in serAddr;
 	serAddr.sin_family = AF_INET;
 	serAddr.sin_port = htons(8888);
-	serAddr.sin_addr.S_un.S_addr = INADDR_ANY;
+	serAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	if(bind(serSocket, (sockaddr *)&serAddr, sizeof(serAddr)) == SOCKET_ERROR)
 	{
 		printf("bind error !");
@@ -69,7 +71,7 @@ int udp_server(int argc, char* argv[])
 	}
 
 	sockaddr_in remoteAddr;
-	int nAddrLen = sizeof(remoteAddr); 
+	socklen_t nAddrLen = sizeof(remoteAddr); 
 	while (true)
 	{
 		char recvData[255];  
@@ -78,15 +80,17 @@ int udp_server(int argc, char* argv[])
 		{
 			recvData[ret] = 0x00;
 			printf("接受到一个连接：%s \r\n", inet_ntoa(remoteAddr.sin_addr));
-			printf(recvData);			
+			printf("%s",recvData);			
 		}
 
-		char * sendData = "一个来自服务端的UDP数据包\n";
+		const char * sendData = "一个来自服务端的UDP数据包\n";
 		sendto(serSocket, sendData, strlen(sendData), 0, (sockaddr *)&remoteAddr, nAddrLen);	
 
 	}
 	closesocket(serSocket); 
+#ifdef WIN32
 	WSACleanup();
+#endif
 	return 0;
 }
 //udp

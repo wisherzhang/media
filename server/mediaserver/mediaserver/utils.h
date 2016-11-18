@@ -14,6 +14,7 @@
 
 #include <assert.h>
 #include <string>
+#include <stdarg.h>
 
 #ifndef ARRAYSIZE
 #define ARRAYSIZE(x) (sizeof(x) / sizeof(x[0]))

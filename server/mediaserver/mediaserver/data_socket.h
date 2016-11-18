@@ -17,9 +17,12 @@
 typedef int socklen_t;
 typedef SOCKET NativeSocket;
 #else
+#include <unistd.h>
 #include <netinet/in.h>
 #include <sys/select.h>
 #include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 #define closesocket close
 typedef int NativeSocket;
 
