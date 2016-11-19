@@ -22,14 +22,14 @@ int main(int argc, char* argv[])
 	sockaddr_in serAddr;
 	serAddr.sin_family = AF_INET;
 	serAddr.sin_port = htons(8888);
-	serAddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1"); 
+	serAddr.sin_addr.s_addr = htonl(INADDR_ANY); 
 	if (connect(sclient, (sockaddr *)&serAddr, sizeof(serAddr)) == SOCKET_ERROR)
 	{
 		printf("connect error !");
 		closesocket(sclient);
 		return 0;
 	}
-	char * sendData = "你好，TCP服务端，我是客户端!\n";
+	const char * sendData = "你好，TCP服务端，我是客户端!\n";
 	send(sclient, sendData, strlen(sendData), 0);
 
 	char recData[255];
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 	if(ret > 0)
 	{
 		recData[ret] = 0x00;
-		printf(recData);
+		printf("%s",recData);
 	}
 	closesocket(sclient);
 #ifdef WIN32

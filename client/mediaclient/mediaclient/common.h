@@ -8,6 +8,8 @@
 typedef int socklen_t;
 typedef SOCKET NativeSocket;
 #else
+#include <stdio.h>
+#include <cstring>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <sys/select.h>
