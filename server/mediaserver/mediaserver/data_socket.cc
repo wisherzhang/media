@@ -285,7 +285,10 @@ DataSocket* ListeningSocket::Accept() const {
 	NativeSocket client =
 		accept(socket_, reinterpret_cast<sockaddr*>(&addr), &size);
 	if (client == INVALID_SOCKET)
+	{
+		printf("Over max listen num,Accept limit reached\n");
 		return NULL;
+	}
 
 	return new DataSocket(client);
 }
