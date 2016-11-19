@@ -1,17 +1,17 @@
-#include <stdio.h>
-#include <winsock2.h>
-
-#pragma comment(lib, "ws2_32.lib") 
+#include "common.h"
 
 int main_udp(int argc, char* argv[])
 {
+#ifdef WIN32
 	WORD socketVersion = MAKEWORD(2,2);
 	WSADATA wsaData; 
 	if(WSAStartup(socketVersion, &wsaData) != 0)
 	{
 		return 0;
 	}
-	SOCKET sclient = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+#endif
+
+	NativeSocket sclient = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
 	sockaddr_in sin;
 	sin.sin_family = AF_INET;
@@ -31,6 +31,8 @@ int main_udp(int argc, char* argv[])
 	}
 
 	closesocket(sclient);
+#ifdef WIN32
 	WSACleanup();
+#endif
 	return 0;
 }

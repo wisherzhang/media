@@ -1,11 +1,8 @@
-#include <WINSOCK2.H>
-#include <STDIO.H>
-
-#pragma  comment(lib,"ws2_32.lib")
-
+#include "common.h"
 
 int main(int argc, char* argv[])
 {
+#ifdef WIN32
 	// 加载socket动态链接库(dll)  
 	WORD sockVersion = MAKEWORD(2,2); // 请求2.2版本的WinSock库 
 	WSADATA data; // 这结构是用于接收Wjndows Socket的结构信息的
@@ -13,8 +10,9 @@ int main(int argc, char* argv[])
 	{
 		return 0;
 	}
-
-	SOCKET sclient = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+#endif
+	
+	NativeSocket sclient = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if(sclient == INVALID_SOCKET)
 	{
 		printf("invalid socket !");
@@ -42,6 +40,8 @@ int main(int argc, char* argv[])
 		printf(recData);
 	}
 	closesocket(sclient);
+#ifdef WIN32
 	WSACleanup();
+#endif
 	return 0;
 }

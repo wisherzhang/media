@@ -77,6 +77,9 @@
     <ClCompile Include="tcp_client.cpp" />
     <ClCompile Include="udp_client.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
