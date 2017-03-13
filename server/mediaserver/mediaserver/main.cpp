@@ -6,15 +6,51 @@ created in 2016.09.29
 #include <string>
 #include <cstring>
 #include <vector>
+#include <signal.h>
+#include <iostream>
 #include "data_socket.h"
 #include "peer_channel.h"
 #include "config.h"
+#include "death_handler.hpp"
+
 using namespace std;
 #ifdef WIN32
 #pragma comment(lib,"ws2_32.lib")
 #endif
 #define BUF_SIZE 1024
 static const size_t kMaxConnections = (FD_SETSIZE - 2);
+
+bool flag = true;
+static void
+signal_handler (int signo)
+{
+  static unsigned int __terminated = 0;
+
+  switch (signo) {
+  case SIGINT:
+	cout<<"receive Ctrl+c signal"<<endl;
+	flag = false;
+	break;
+  case SIGTERM:
+    /*if (__terminated == 0) {
+      GST_DEBUG ("Terminating.");
+      loop->quit ();
+    }
+
+    __terminated = 1;*/
+	cout<<"receive kill singal "<<endl;
+    break;
+
+  case SIGPIPE:
+    //GST_DEBUG ("Ignore sigpipe signal");
+    cout<<"receive SIGPIPE singal "<<endl;
+    break;
+
+  default:
+    break;
+  }
+}
+
 #include <assert.h>
 void HandleBrowserRequest(DataSocket* ds, bool* quit) {
 	assert(ds && ds->valid());
@@ -98,6 +134,19 @@ int main(int argc, char* argv[])
 {
 	// Abort if the user specifies a port that is outside the allowed
 	// range [1, 65535].
+ 	Debug::DeathHandler dh;
+        dh.set_thread_safe (true);
+        dh.set_color_output (true);
+
+	struct sigaction signalAction;
+
+ 	/* Install our signal handler */
+  	signalAction.sa_handler = signal_handler;
+
+  	sigaction (SIGINT, &signalAction, NULL);
+  	sigaction (SIGTERM, &signalAction, NULL);
+  	sigaction (SIGPIPE, &signalAction, NULL);
+
 	Config *config = new Config("config.ini");
 	string server_port;
 	string port_key = "port";
