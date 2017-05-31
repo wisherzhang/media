@@ -11,7 +11,7 @@ created in 2016.09.29
 #include "data_socket.h"
 #include "peer_channel.h"
 #include "config.h"
-#include "death_handler.hpp"
+#include "death_handler.h"
 
 using namespace std;
 #ifdef WIN32

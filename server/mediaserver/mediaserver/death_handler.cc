@@ -34,7 +34,7 @@
  *  @copyright 2012 Samsung R&D Institute Russia
  */
 
-#include "death_handler.hpp"
+#include "death_handler.h"
 #include <assert.h>
 #include <cxxabi.h>
 #include <execinfo.h>

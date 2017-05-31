@@ -1,6 +1,6 @@
 CC=g++
 CCFLAG=-c -pie
-objects=main.o peer_channel.o data_socket.o utils.o config.o death_handler.o
+objects=main.cc peer_channel.cc data_socket.cc utils.cc config.cc death_handler.cc
 mediaserver: ${objects}
 	${CC} -o  mediaserver  ${objects} -ldl
  
