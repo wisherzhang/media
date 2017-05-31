@@ -12,7 +12,7 @@ created in 2016.09.29
 #include "peer_channel.h"
 #include "config.h"
 #include "death_handler.h"
-
+#include <memory>
 using namespace std;
 #ifdef WIN32
 #pragma comment(lib,"ws2_32.lib")
@@ -147,7 +147,7 @@ int main(int argc, char* argv[])
   	sigaction (SIGTERM, &signalAction, NULL);
   	sigaction (SIGPIPE, &signalAction, NULL);
 
-	Config *config = new Config("config.ini");
+	unique_ptr<Config> config(new Config("config.ini"));
 	string server_port;
 	string port_key = "port";
 	string ip;

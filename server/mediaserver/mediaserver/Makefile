@@ -1,8 +1,9 @@
 CC=g++
-CCFLAG=-c -pie
+CCFLAG=-pie
+TARGET=mediaserver
 objects=main.cc peer_channel.cc data_socket.cc utils.cc config.cc death_handler.cc
 mediaserver: ${objects}
-	${CC} -o  mediaserver  ${objects} -ldl
+	${CC} -o  ${TARGET} -std=c++11 ${objects} -ldl
  
 clean:
-	rm *.o
+	rm *.o ${TARGET} 
