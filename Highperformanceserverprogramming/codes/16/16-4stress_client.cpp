@@ -96,6 +96,10 @@ void start_conn( int epoll_fd, int num, const char* ip, int port )
             printf( "build connection %d\n", i );
             addfd( epoll_fd, sockfd );
         }
+	else 
+	{
+		printf("build connection failed!");
+	}
     }
 }
 

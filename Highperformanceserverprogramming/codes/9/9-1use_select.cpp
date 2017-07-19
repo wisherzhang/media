@@ -63,8 +63,10 @@ int main( int argc, char* argv[] )
 		memset( buf, '\0', sizeof( buf ) );
 		FD_SET( connfd, &read_fds );
 		FD_SET( connfd, &exception_fds );
-
-        	ret = select( connfd + 1, &read_fds, NULL, &exception_fds, NULL );
+		struct timeval timeout;
+		timeout.tv_sec = 20;
+		timeout.tv_usec = 0;
+        	ret = select( connfd + 1, &read_fds, NULL, &exception_fds, &timeout );
 		printf( "select one\n" );
         	if ( ret < 0 )
         	{

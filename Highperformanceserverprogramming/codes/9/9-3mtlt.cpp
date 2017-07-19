@@ -13,7 +13,7 @@
 #include <pthread.h>
 
 #define MAX_EVENT_NUMBER 1024
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 100
 
 int setnonblocking( int fd )
 {
@@ -134,8 +134,10 @@ int main( int argc, char* argv[] )
 
     int listenfd = socket( PF_INET, SOCK_STREAM, 0 );
     assert( listenfd >= 0 );
-
+    int opt = 1;  
+    setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)); 
     ret = bind( listenfd, ( struct sockaddr* )&address, sizeof( address ) );
+    printf( "bind ret:%d errno:%d\n",ret,errno);
     assert( ret != -1 );
 
     ret = listen( listenfd, 5 );
@@ -155,8 +157,8 @@ int main( int argc, char* argv[] )
             break;
         }
     
-        lt( events, ret, epollfd, listenfd );
-        //et( events, ret, epollfd, listenfd );
+//        lt( events, ret, epollfd, listenfd );
+        et( events, ret, epollfd, listenfd );
     }
 
     close( listenfd );
